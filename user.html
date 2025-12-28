@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tailwind Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 overflow-x-hidden">
+
+  <!-- Mobile Menu Button -->
+  <button
+    id="menuBtn"
+    class="fixed top-4 left-4 z-50 lg:hidden p-2 bg-gray-900 text-white rounded">
+    ☰
+  </button>
+
+  <!-- Overlay -->
+  <div
+    id="overlay"
+    class="fixed inset-0 bg-black/50 z-30 hidden lg:hidden">
+  </div>
+
+  <!-- Sidebar -->
+  <aside
+    id="sidebar"
+    class="fixed top-0 left-0 h-screen w-64 bg-gray-900 text-white z-40
+           transform -translate-x-full transition-transform duration-300
+           lg:translate-x-0">
+
+    <!-- Close Button -->
+    <button
+      id="closeBtn"
+      class="absolute top-4 right-4 text-white lg:hidden">
+      ✕
+    </button>
+
+    <h2 class="text-xl font-bold px-4 mt-6 mb-6">
+      My Dashboard
+    </h2>
+
+    <nav class="space-y-2 px-2">
+      <a href="index.html" class="block px-4 py-2 rounded hover:bg-gray-800">
+        Home
+      </a>
+
+      <a href="try1.html"
+         class="block px-4 py-2 rounded bg-gray-800 text-white hover:bg-gray-700">
+        Dashboard<span class="text-red-500 text-lg">.</span>
+      </a>
+
+      <a href="user.html" class="block px-4 py-2 rounded hover:bg-gray-800">
+        Users
+      </a>
+
+      <a href="Expense.html" class="block px-4 py-2 rounded hover:bg-gray-800">
+        Expense
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="pt-20 lg:pl-64">
+    <main class="p-6">
+
+      <h1 class="text-2xl font-semibold mb-2">User Management</h1>
+      <p class="text-gray-500 mb-6">
+        Manage your application users here.
+      </p>
+
+      <div class="bg-white p-6 rounded-xl shadow overflow-x-auto">
+        <table class="min-w-full table-auto">
+          <thead>
+            <tr class="bg-gray-200">
+              <th class="px-4 py-2 text-left">ID</th>
+              <th class="px-4 py-2 text-left">Image</th>
+              <th class="px-4 py-2 text-left">Name</th>
+              <th class="px-4 py-2 text-left">Email</th>
+              <th class="px-4 py-2 text-left">Role</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr class="border-b">
+              <td class="px-4 py-2">1</td>
+              <td class="px-4 py-2">
+                <img src="images (3).jfif" class="w-10 h-10 rounded-full" />
+              </td>
+              <td class="px-4 py-2">John Doe</td>
+              <td class="px-4 py-2">john@example.com</td>
+              <td class="px-4 py-2">Admin</td>
+            </tr>
+
+            <tr class="border-b">
+              <td class="px-4 py-2">2</td>
+              <td class="px-4 py-2">
+                <img src="images (3).jfif" class="w-10 h-10 rounded-full" />
+              </td>
+              <td class="px-4 py-2">Jane Smith</td>
+              <td class="px-4 py-2">jane@example.com</td>
+              <td class="px-4 py-2">Editor</td>
+            </tr>
+
+            <tr>
+              <td class="px-4 py-2">3</td>
+              <td class="px-4 py-2">
+                <img src="images (3).jfif" class="w-10 h-10 rounded-full" />
+              </td>
+              <td class="px-4 py-2">Ali Khan</td>
+              <td class="px-4 py-2">ali@example.com</td>
+              <td class="px-4 py-2">User</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    const sidebar = document.getElementById("sidebar");
+    const menuBtn = document.getElementById("menuBtn");
+    const closeBtn = document.getElementById("closeBtn");
+    const overlay = document.getElementById("overlay");
+
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.remove("-translate-x-full");
+      overlay.classList.remove("hidden");
+      document.body.classList.add("overflow-hidden");
+    });
+
+    function closeSidebar() {
+      sidebar.classList.add("-translate-x-full");
+      overlay.classList.add("hidden");
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    closeBtn.addEventListener("click", closeSidebar);
+    overlay.addEventListener("click", closeSidebar);
+  </script>
+
+</body>
+</html>

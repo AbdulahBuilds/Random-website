@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense Tracker Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen overflow-x-hidden">
+
+  <!-- Mobile Menu Button -->
+  <button
+    id="menuBtn"
+    class="fixed top-4 left-4 z-50 lg:hidden p-2 bg-gray-900 text-white rounded">
+    ☰
+  </button>
+
+  <!-- Overlay -->
+  <div
+    id="overlay"
+    class="fixed inset-0 bg-black/50 hidden z-40 lg:hidden">
+  </div>
+
+  <!-- Sidebar -->
+  <aside
+  id="sidebar"
+  class="fixed top-0 left-0 h-screen w-64 bg-gray-900 text-white z-50
+         transform -translate-x-full transition-transform duration-300
+         lg:translate-x-0 border-none outline-none shadow-none">
+
+
+    <button
+      id="closeBtn"
+      class="absolute top-4 right-4 lg:hidden">
+      ✕
+    </button>
+
+    <h2 class="text-xl font-bold px-4 mt-6 mb-6">
+      My Dashboard
+    </h2>
+
+    <nav class="space-y-2 px-2">
+      <a href="index.html" class="block px-4 py-2 rounded hover:bg-gray-800">Home</a>
+      <a href="try1.html" class="block px-4 py-2 rounded bg-gray-800">Dashboard</a>
+      <a href="user.html" class="block px-4 py-2 rounded hover:bg-gray-800">Users</a>
+      <a href="Expense.html" class="block px-4 py-2 rounded hover:bg-gray-800">Reports</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="lg:ml-64 p-6 flex flex-col items-center">
+
+    <div class="w-full max-w-4xl mb-6">
+      <h1 class="text-2xl font-bold text-gray-800">Expense Tracker</h1>
+    </div>
+
+    <!-- Add Expense -->
+    <form
+      id="expenseForm"
+      class="w-full max-w-md bg-white rounded-xl shadow p-6">
+
+      <h2 class="text-xl font-semibold mb-6 text-center">Add Expense</h2>
+
+      <div class="mb-4">
+        <label for="amount" class="block text-sm font-medium mb-1">
+          Amount (PKR)
+        </label>
+        <input
+          id="amount"
+          type="number"
+          required
+          min="1"
+          class="w-full rounded-lg border px-3 py-2 focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter amount">
+      </div>
+
+      <div class="mb-6">
+        <label for="description" class="block text-sm font-medium mb-1">
+          Description
+        </label>
+        <input
+          id="description"
+          type="text"
+          required
+          class="w-full rounded-lg border px-3 py-2 focus:ring-2 focus:ring-blue-500"
+          placeholder="e.g. Grocery, Rent">
+      </div>
+
+      <div class="flex gap-3">
+        <button
+          type="submit"
+          class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold">
+          Add
+        </button>
+
+        <button
+          type="button"
+          id="clearAll"
+          class="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg font-semibold">
+          Clear
+        </button>
+      </div>
+    </form>
+
+    <!-- Expense List -->
+    <div class="w-full max-w-md bg-white rounded-xl shadow p-6 mt-8">
+      <h2 class="text-lg font-semibold mb-4">Expenses</h2>
+
+      <p id="emptyState" class="text-gray-500 text-sm">
+        No expenses added yet.
+      </p>
+
+      <ul id="expenseList" class="space-y-2"></ul>
+
+      <div class="border-t mt-4 pt-4 flex justify-between font-bold">
+        <span>Total</span>
+        <span>PKR <span id="totalExpense">0</span></span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- JavaScript -->
+  <script>
+    const sidebar = document.getElementById("sidebar");
+    const menuBtn = document.getElementById("menuBtn");
+    const closeBtn = document.getElementById("closeBtn");
+    const overlay = document.getElementById("overlay");
+
+    const form = document.getElementById("expenseForm");
+    const amountInput = document.getElementById("amount");
+    const descInput = document.getElementById("description");
+    const expenseList = document.getElementById("expenseList");
+    const totalExpenseEl = document.getElementById("totalExpense");
+    const emptyState = document.getElementById("emptyState");
+    const clearAllBtn = document.getElementById("clearAll");
+
+    const expenses = [];
+
+    function openSidebar() {
+      sidebar.classList.remove("-translate-x-full");
+      overlay.classList.remove("hidden");
+      document.body.classList.add("overflow-hidden");
+    }
+
+    function closeSidebar() {
+      sidebar.classList.add("-translate-x-full");
+      overlay.classList.add("hidden");
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    menuBtn.addEventListener("click", openSidebar);
+    closeBtn.addEventListener("click", closeSidebar);
+    overlay.addEventListener("click", closeSidebar);
+
+    function renderExpenses() {
+      expenseList.innerHTML = "";
+      let total = 0;
+
+      if (expenses.length === 0) {
+        emptyState.classList.remove("hidden");
+      } else {
+        emptyState.classList.add("hidden");
+      }
+
+      expenses.forEach(exp => {
+        total += exp.amount;
+
+        const li = document.createElement("li");
+        li.className = "flex justify-between items-center";
+
+        li.innerHTML = `
+          <span>${exp.description} — PKR ${exp.amount}</span>
+          <button class="text-red-500 hover:text-red-700" aria-label="Remove expense">Remove</button>
+        `;
+
+        li.querySelector("button").addEventListener("click", () => {
+          const index = expenses.findIndex(e => e.id === exp.id);
+          expenses.splice(index, 1);
+          renderExpenses();
+        });
+
+        expenseList.appendChild(li);
+      });
+
+      totalExpenseEl.textContent = total.toFixed(2);
+    }
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+
+      expenses.push({
+        id: Date.now(),
+        amount: Number(amountInput.value),
+        description: descInput.value.trim()
+      });
+
+      form.reset();
+      renderExpenses();
+    });
+
+    clearAllBtn.addEventListener("click", () => {
+      expenses.length = 0;
+      renderExpenses();
+    });
+  </script>
+
+</body>
+</html>

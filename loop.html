@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+        // for (let index = 0; index < array.length; index++) {
+        //     const element = array[index];
+            
+        // }
+        for (let f = 0; f <= 10; f++) {
+
+            let element = f;
+            console.log(element);
+
+        } 
+
+        //Print numbers 10 to 1
+        for (let i = 10; i >= 1; i--) {
+            console.log(i);
+        }
+
+        console.log("-----");
+
+        //2️⃣ Print numbers 10 to 1 WHILE LOOP
+        let j = 10;
+        while (j >= 1) {
+            console.log(j);
+            j--;
+        }
+
+                console.log("-----");
+
+
+        //Print all even numbers between 1 and 20
+
+        for (let k = 1; k <=20; k++) {
+            if (k%2 === 0) {
+                console.log(k);
+            }
+        }
+
+                console.log("-----");
+        //Print table of 5
+
+               for (let i = 1; i <=10; i++) {
+                let result = 5 * i;
+                console.log(`5 x ${i} = ${result}`);
+               }
+
+         //Print sum of numbers from 1 to 100
+         let sum = 0;
+         for (let n = 1; n <= 100; n++) {
+            sum += n;  // sum = sum + n
+            console.log("Sum of numbers from 1 to 100:", sum);
+         }      
+
+
+         let fruits = ["Apple", "Banana", "Mango", "Orange"];
+            for (let m = 0; m < fruits.length; m++) {
+                console.log(fruits[m]);
+            }
+
+            console.log("-----");
+            let count = 0;
+            
+            
+            for (let i in fruits) {
+              count++;
+            }
+
+            console.log(count);
+
+
+            console.log("-----");
+
+            //Print only numbers greater than 10
+
+            let numbers = [5, 12, 8, 20, 3, 15, 7];
+            for (let i = 0; i < numbers.length; i++) {
+                if (numbers[i] > 10) {
+                    console.log(numbers[i]);
+                }
+            }
+
+
+            
+
+    </script>
+</body>
+</html>
